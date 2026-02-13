@@ -1,7 +1,12 @@
+"""
+Unit tests for computeSales module.
+"""
+
 from src.compute_sales import build_price_dictionary, compute_total_sales
 
 
 def test_compute_sales():
+    """Test total sales computation using sample data."""
     catalogue = [
         {"title": "Product1", "price": 10},
         {"title": "Product2", "price": 20}
