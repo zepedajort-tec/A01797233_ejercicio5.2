@@ -105,7 +105,7 @@ def compute_total_sales(price_dict, sales_record):
 
 def save_results(total_cost, elapsed_time):
     """Save results into file."""
-    with open("SalesResults.txt", "w", encoding="utf-8") as file:
+    with open("output/SalesResults.txt", "w", encoding="utf-8") as file:
         file.write("SALES RESULTS\n")
         file.write("====================\n")
         file.write(f"Total Cost: {total_cost:.2f}\n")
