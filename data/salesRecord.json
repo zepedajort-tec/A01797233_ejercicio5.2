@@ -1,0 +1,26 @@
+[
+  {
+    "Product": "Laptop",
+    "Quantity": 2
+  },
+  {
+    "Product": "Mouse",
+    "Quantity": 5
+  },
+  {
+    "Product": "Keyboard",
+    "Quantity": 3
+  },
+  {
+    "Product": "Monitor",
+    "Quantity": 1
+  },
+  {
+    "Product": "USB Cable",
+    "Quantity": 10
+  },
+  {
+    "Product": "Tablet",
+    "Quantity": 2
+  }
+]
