@@ -57,7 +57,7 @@ def main():
     print("====================")
     print(f"Total Cost: {total_cost:.2f}")
     print(f"Execution Time: {elapsed_time:.4f} seconds")
-    with open("/output/SalesResults.txt", "w", encoding="utf-8") as file:
+    with open("output/SalesResults.txt", "w", encoding="utf-8") as file:
         file.write("SALES RESULTS\n")
         file.write("====================\n")
         file.write(f"Total Cost: {total_cost:.2f}\n")
