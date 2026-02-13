@@ -1,0 +1,22 @@
+[
+  {
+    "title": "Laptop",
+    "price": 15000
+  },
+  {
+    "title": "Mouse",
+    "price": 250
+  },
+  {
+    "title": "Keyboard",
+    "price": 500
+  },
+  {
+    "title": "Monitor",
+    "price": 3500
+  },
+  {
+    "title": "USB Cable",
+    "price": 120
+  }
+]
