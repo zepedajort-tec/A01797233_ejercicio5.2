@@ -13,50 +13,99 @@ def load_json_file(filename):
         with open(filename, "r", encoding="utf-8") as file:
             return json.load(file)
     except FileNotFoundError:
-        print(f"Error: File {filename} not found.")
-        return None
+        print(f"ERROR: File '{filename}' not found.")
     except json.JSONDecodeError:
-        print(f"Error: Invalid JSON format in {filename}.")
-        return None
+        print(f"ERROR: File '{filename}' contains invalid JSON.")
+    except Exception as exc:  # pylint: disable=broad-except
+        print(f"Unexpected error reading '{filename}': {exc}")
+
+    return None
 
 
 def build_price_dictionary(price_catalogue):
-    """Create dictionary with product prices."""
+    """Create dictionary with product prices validating entries."""
     price_dict = {}
 
-    for item in price_catalogue:
+    if not isinstance(price_catalogue, list):
+        print("ERROR: Price catalogue must be a list.")
+        return price_dict
+
+    for index, item in enumerate(price_catalogue):
+
+        if not isinstance(item, dict):
+            print(f"Invalid catalogue entry at index {index}: Not a dict")
+            continue
+
+        title = item.get("title")
+        price = item.get("price")
+
+        if title is None:
+            print(f"Catalogue entry missing 'title': {item}")
+            continue
+
         try:
-            price_dict[item["title"]] = float(item["price"])
-        except (KeyError, ValueError, TypeError):
-            print(f"Invalid product entry detected: {item}")
+            price = float(price)
+
+            if price < 0:
+                print(f"Negative price detected for '{title}'")
+                continue
+
+            price_dict[title] = price
+
+        except (TypeError, ValueError):
+            print(f"Invalid price for product '{title}': {price}")
 
     return price_dict
 
 
 def compute_total_sales(price_dict, sales_record):
-    """Compute total cost of sales."""
+    """Compute total cost of sales validating entries."""
     total_cost = 0.0
 
-    for sale in sales_record:
-        try:
-            product = sale["Product"]
-            quantity = float(sale["Quantity"])
+    if not isinstance(sales_record, list):
+        print("ERROR: Sales record must be a list.")
+        return total_cost
 
-            if product not in price_dict:
-                print(f"Product '{product}' not found in catalogue.")
+    for index, sale in enumerate(sales_record):
+
+        if not isinstance(sale, dict):
+            print(f"Invalid sale entry at index {index}: Not a dict")
+            continue
+
+        product = sale.get("Product")
+        quantity = sale.get("Quantity")
+
+        if product is None:
+            print(f"Sale entry missing 'Product': {sale}")
+            continue
+
+        if quantity is None:
+            print(f"Sale entry missing 'Quantity': {sale}")
+            continue
+
+        try:
+            quantity = float(quantity)
+
+            if quantity <= 0:
+                print(f"Invalid quantity for '{product}': {quantity}")
                 continue
 
-            total_cost += price_dict[product] * quantity
+        except (TypeError, ValueError):
+            print(f"Quantity is not numeric for '{product}': {quantity}")
+            continue
 
-        except (KeyError, ValueError, TypeError):
-            print(f"Invalid sales entry detected: {sale}")
+        if product not in price_dict:
+            print(f"Product '{product}' not found in catalogue.")
+            continue
+
+        total_cost += price_dict[product] * quantity
 
     return total_cost
 
 
 def save_results(total_cost, elapsed_time):
     """Save results into file."""
-    with open("output/SalesResults.txt", "w", encoding="utf-8") as file:
+    with open("SalesResults.txt", "w", encoding="utf-8") as file:
         file.write("SALES RESULTS\n")
         file.write("====================\n")
         file.write(f"Total Cost: {total_cost:.2f}\n")
@@ -64,19 +113,16 @@ def save_results(total_cost, elapsed_time):
 
 
 def main():
-    """Main program execution."""
+    """Main execution."""
     if len(sys.argv) != 3:
-        print("Usage: python src/compute_sales.py priceCatalogue.json "
+        print("Usage: python computeSales.py priceCatalogue.json "
               "salesRecord.json")
         sys.exit(1)
 
     start_time = time.time()
 
-    price_file = sys.argv[1]
-    sales_file = sys.argv[2]
-
-    price_catalogue = load_json_file(price_file)
-    sales_record = load_json_file(sales_file)
+    price_catalogue = load_json_file(sys.argv[1])
+    sales_record = load_json_file(sys.argv[2])
 
     if price_catalogue is None or sales_record is None:
         sys.exit(1)
@@ -87,7 +133,7 @@ def main():
 
     elapsed_time = time.time() - start_time
 
-    print("SALES RESULTS")
+    print("\nSALES RESULTS")
     print("====================")
     print(f"Total Cost: {total_cost:.2f}")
     print(f"Execution Time: {elapsed_time:.4f} seconds")
