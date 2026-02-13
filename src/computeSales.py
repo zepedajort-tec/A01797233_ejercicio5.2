@@ -2,6 +2,7 @@ import json
 import sys
 import time
 
+
 def load_json_file(filename):
     try:
         with open(filename, "r", encoding="utf-8") as file:
@@ -13,9 +14,11 @@ def load_json_file(filename):
         print(f"Error: Invalid JSON format in {filename}.")
         return None
 
+
 def main():
     if len(sys.argv) != 3:
-        print("Usage: python computeSales.py priceCatalogue.json salesRecord.json")
+        print("Usage: python computeSales.py priceCatalogue.json "
+              "salesRecord.json")
         sys.exit(1)
 
     start_time = time.time()
@@ -29,7 +32,7 @@ def main():
     if price_catalogue is None or sales_record is None:
         sys.exit(1)
 
-    price_dict = { }
+    price_dict = {}
     for item in price_catalogue:
         try:
             price_dict[item["title"]] = float(item["price"])
@@ -62,6 +65,7 @@ def main():
         file.write("====================\n")
         file.write(f"Total Cost: {total_cost:.2f}\n")
         file.write(f"Execution Time: {elapsed_time:.4f} seconds\n")
+
 
 if __name__ == "__main__":
     main()
