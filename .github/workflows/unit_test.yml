@@ -1,11 +1,11 @@
-name: 🚀 Flake8 check ✅
+name: 🚀 Unit Test check ✅
 
 on:
   pull_request:
     types: [opened, synchronize, reopened]
 
 jobs:
-  lint:
+  unit-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -15,6 +15,6 @@ jobs:
           python-version: '3.11'
       - name: Install dependencies
         run: |
-          pip install flake8
-      - name: 🔍 Run flake8
-        run: flake8 src/ tests/
+          pip install pytest
+      - name: 🔍 Run pytest
+        run: pytest tests/
