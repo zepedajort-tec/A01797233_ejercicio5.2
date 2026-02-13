@@ -1,0 +1,8 @@
+[
+  { "title": "Laptop", "price": 15000 },
+  { "title": "Mouse", "price": "250" },
+  { "title": "Keyboard", "price": -500 },
+  { "price": 3500 },
+  "Invalid entry",
+  { "title": "Monitor", "price": null }
+]

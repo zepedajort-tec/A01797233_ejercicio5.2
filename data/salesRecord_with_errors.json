@@ -1,0 +1,8 @@
+[
+  { "Product": "Laptop", "Quantity": 2 },
+  { "Product": "Mouse", "Quantity": "five" },
+  { "Product": "Keyboard", "Quantity": -1 },
+  { "Quantity": 3 },
+  "Invalid entry",
+  { "Product": "Tablet", "Quantity": 2 }
+]
